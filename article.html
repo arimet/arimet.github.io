@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title id="dynamic-title">Article Viewer</title>
+        <link rel="stylesheet" href="assets/css/markdown.css" />
+        <link
+            rel="shortcut icon"
+            href="./assets/images/favicon.ico"
+            type="image/x-icon"
+        />
+        <style>
+            .markdown-body {
+                max-width: 800px;
+                margin: 2rem auto;
+                padding: 2rem;
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+                font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+            }
+            .article-layout {
+                display: flex;
+                flex-direction: column;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            #toc {
+                background: #f7f7f7;
+                border-radius: 8px;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+                margin-bottom: 2rem;
+                padding: 2rem;
+                max-width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            #toc ul {
+                padding-left: 1rem;
+            }
+            @media (min-width: 1000px) {
+                .article-layout {
+                    flex-direction: row;
+                    align-items: flex-start;
+                }
+                #toc {
+                    position: sticky;
+                    top: 2rem;
+                    min-width: 260px;
+                    max-width: 300px;
+                    margin: 2rem 2rem 2rem 0;
+                    padding: 1.5rem 1rem;
+                    height: fit-content;
+                    margin-bottom: 0;
+                }
+                #article {
+                    flex: 1;
+                    max-width: 800px;
+                    margin: 2rem 0 2rem 0;
+                }
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    </head>
+    <body>
+        <div style="padding: 0 2rem">
+            <a
+                href="/#blog"
+                style="
+                    display: inline-block;
+                    color: hsl(15, 85%, 65%);
+                    text-decoration: underline;
+                "
+                >← Return to Blog</a
+            >
+        </div>
+        <div class="article-layout">
+            <div id="toc" class="markdown-body" style="display: none"></div>
+            <div id="article" class="markdown-body">Loading article...</div>
+        </div>
+        <script>
+            // Get article name from URL query (?name=...)
+            function getArticleName() {
+                const params = new URLSearchParams(window.location.search);
+                let name = params.get('name');
+                if (!name) name = 'test.md';
+                if (!/^[\w\-.]+\.md$/.test(name)) return null;
+                return name;
+            }
+
+            const articleName = getArticleName();
+            const fetchUrl = 'assets/articles/' + articleName;
+            if (!articleName) {
+                document.getElementById('article').textContent =
+                    'Invalid article name.';
+            } else {
+                document.getElementById('article').textContent =
+                    'Loading: ' + fetchUrl;
+                fetch(fetchUrl)
+                    .then((response) => {
+                        if (!response.ok)
+                            throw new Error('HTTP ' + response.status);
+                        return response.text();
+                    })
+                    .then((md) => {
+                        // Parse markdown and render article
+                        document.getElementById('article').innerHTML =
+                            marked.parse(md);
+
+                        // Set document title to first heading (h1) in markdown
+                        const firstHeadingMatch = md.match(/^#\s+(.+)$/m);
+                        if (firstHeadingMatch) {
+                            document.title = firstHeadingMatch[1].trim();
+                        }
+
+                        // Generate TOC using marked.lexer for nested headings
+                        function createToc(mdText) {
+                            // Only include headings with depth > 1 (exclude h1)
+                            const headings = marked
+                                .lexer(mdText)
+                                .filter(
+                                    (x) => x.type === 'heading' && x.depth > 1,
+                                );
+                            if (headings.length === 0) return null;
+                            const stack = [document.createElement('ul')];
+                            for (const heading of headings) {
+                                if (heading.depth < stack.length + 1) {
+                                    stack.length = heading.depth - 1;
+                                } else {
+                                    while (heading.depth > stack.length + 1) {
+                                        const ul = document.createElement('ul');
+                                        stack.at(-1).append(ul);
+                                        stack.push(ul);
+                                    }
+                                }
+                                const prefix =
+                                    marked.getDefaults().headerPrefix || '';
+                                const anchor =
+                                    prefix +
+                                    heading.text
+                                        .replaceAll('.', '')
+                                        .replaceAll(' ', '-');
+                                stack
+                                    .at(-1)
+                                    .insertAdjacentHTML(
+                                        'beforeend',
+                                        `<li><a href="#${anchor}">${heading.text}</a></li>`,
+                                    );
+                            }
+                            return stack[0];
+                        }
+                        const tocDiv = document.getElementById('toc');
+                        const tocList = createToc(md);
+                        if (tocList && tocList.children.length > 0) {
+                            tocDiv.innerHTML =
+                                '<strong>Table of Contents</strong>';
+                            tocDiv.appendChild(tocList);
+                            tocDiv.style.display = 'block';
+                        } else {
+                            tocDiv.innerHTML = '';
+                            tocDiv.style.display = 'none';
+                        }
+
+                        // Add id to headings in article for anchor links (match anchor logic)
+                        document
+                            .querySelectorAll(
+                                '#article h1, #article h2, #article h3, #article h4, #article h5, #article h6',
+                            )
+                            .forEach(function (h) {
+                                const prefix =
+                                    marked.getDefaults().headerPrefix || '';
+                                const text = h.textContent;
+                                const anchor =
+                                    prefix +
+                                    text
+                                        .replaceAll('.', '')
+                                        .replaceAll(' ', '-');
+                                h.id = anchor;
+                            });
+                    })
+                    .catch((err) => {
+                        document.getElementById('article').textContent =
+                            'Failed to load article. (' + err + ')';
+                        console.error('Error fetching', fetchUrl, err);
+                    });
+            }
+        </script>
+    </body>
+</html>
