@@ -1,245 +1,339 @@
----
-__Advertisement :)__
+# LocalStack And SAM: Develop and Test Your Lambda Functions Locally
 
-- __[pica](https://nodeca.github.io/pica/demo/)__ - high quality and fast image
-  resize in browser.
-- __[babelfish](https://github.com/nodeca/babelfish/)__ - developer friendly
-  i18n with plurals support and easy syntax.
+In one of our projects, we have a rather unique backend: full SQL with Hasura as a proxy in front of it. It's super efficient for standard queries, but sometimes we need to do more complex things in Python.
+That's where AWS Lambda comes in.
 
-You will like those projects!
+The problem? Developing directly on AWS can be time-consuming and expensive. If you have to go through a DevOps team for every change, it quickly becomes a nightmare. And you can't test locally. **LocalStack has changed the game**: we can now develop and test our Lambdas locally.
 
----
+This article shows you how we set up this stack and the problems we encountered (spoiler: Lambda Layers on LocalStack are not free).
 
-# h1 Heading 8-)
-## h2 Heading
-### h3 Heading
-#### h4 Heading
-##### h5 Heading
-###### h6 Heading
+## What exactly is Lambda?
 
+AWS Lambda is **serverless**: a computing service that executes code without the need to manage servers. You write code, AWS executes it when needed, and you only pay for the execution time.
 
-## Horizontal Rules
+And behind the scenes, it's basically just a function.
 
-___
-
----
-
-***
-
-
-## Typographic replacements
-
-Enable typographer option to see result.
-
-(c) (C) (r) (R) (tm) (TM) (p) (P) +-
-
-test.. test... test..... test?..... test!....
-
-!!!!!! ???? ,,  -- ---
-
-"Smartypants, double quotes" and 'single quotes'
-
-
-## Emphasis
-
-**This is bold text**
-
-__This is bold text__
-
-*This is italic text*
-
-_This is italic text_
-
-~~Strikethrough~~
-
-
-## Blockquotes
-
-
-> Blockquotes can also be nested...
->> ...by using additional greater-than signs right next to each other...
-> > > ...or with spaces between arrows.
-
-
-## Lists
-
-Unordered
-
-+ Create a list by starting a line with `+`, `-`, or `*`
-+ Sub-lists are made by indenting 2 spaces:
-  - Marker character change forces new list start:
-    * Ac tristique libero volutpat at
-    + Facilisis in pretium nisl aliquet
-    - Nulla volutpat aliquam velit
-+ Very easy!
-
-Ordered
-
-1. Lorem ipsum dolor sit amet
-2. Consectetur adipiscing elit
-3. Integer molestie lorem at massa
-
-
-1. You can use sequential numbers...
-1. ...or keep all the numbers as `1.`
-
-Start numbering with offset:
-
-57. foo
-1. bar
-
-
-## Code
-
-Inline `code`
-
-Indented code
-
-    // Some comments
-    line 1 of code
-    line 2 of code
-    line 3 of code
-
-
-Block code "fences"
-
-```
-Sample text here...
+```python
+def lambda_handler(event, context):
+    # event contains input data
+    # context provides information about execution
+    return {
+        'statusCode': 200,
+        'body': json.dumps({'message': 'Hello from Lambda!'})
+    }
 ```
 
-Syntax highlighting
+In our case, we use Lambdas to:
 
-``` js
-var foo = function (bar) {
-  return bar++;
-};
+- Communicate with S3
+- Send emails via CRONs
+- Perform calculations that would take too long in SQL
 
-console.log(foo(5));
+Lambdas can be created via the interface or command line, which is a pain. You have to define the infrastructure, manage permissions, deploy the code, etc.
+
+This is where **SAM** becomes indispensable.
+
+## SAM : Infrastructure for non-DevOps
+
+AWS SAM (Serverless Application Model) is a framework that drastically simplifies the creation of Lambdas. Everything is done via a YAML file.
+
+A SAM project looks like this:
+
+```
+my-project/
+├── template.yaml          # Defines the entire infrastructure
+├── samconfig.toml         # Deployment configuration
+├── src/handlers/          # Your Python code
+└── layers/                # Code shared between Lambdas
 ```
 
-## Tables
+The **template.yaml** file is the core of the project. Here is a minimalist example:
 
-| Option | Description |
-| ------ | ----------- |
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default. |
-| ext    | extension to be used for dest files. |
+```yaml
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
 
-Right aligned columns
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: hello-world-function
+      CodeUri: src/handlers/hello_world/
+      Handler: app.lambda_handler
+      Runtime: python3.12
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: get
+```
 
-| Option | Description |
-| ------:| -----------:|
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default. |
-| ext    | extension to be used for dest files. |
+That's it! SAM will create the Lambda with a simple command.
 
+```bash
+sam build   # Build the project
+sam deploy  # Deploy to AWS
+```
 
-## Links
+Of course, you can add S3, API Gateways, IAM permissions—everything is managed in YAML. We won't go into detail here, as the SAM documentation is very comprehensive (although good luck finding the information you need easily).
 
-[link text](http://dev.nodeca.com)
+### How does SAM know where to deploy?
 
-[link with title](http://nodeca.github.io/pica/demo/ "title text!")
+SAM does not “guess” the target. It relies on two things:
 
-Autoconverted link https://github.com/nodeca/pica (enable linkify to see)
+- Your AWS credentials/settings (profile/environment variables) to know which account and region to deploy to.
+- A `samconfig.toml` file (or command line options) to store the stack name, region, artifacts bucket, etc.
 
+Here's how it works:
 
-## Images
+1. The first time, run a guided deployment that will ask the right questions and save the answers.
 
-![Minion](https://octodex.github.com/images/minion.png)
-![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg "The Stormtroopocat")
+```bash
+sam deploy --guided
+```
 
-Like links, Images also have a footnote style syntax
+2. SAM saves these choices in `samconfig.toml` and reuses them for subsequent `sam deploy` commands.
 
-![Alt text][id]
+Minimal example of `samconfig.toml` (generated by the guided deployment):
 
-With a reference later in the document defining the URL location:
+```toml
+version = 0.1
 
-[id]: https://octodex.github.com/images/dojocat.jpg  "The Dojocat"
+[default.deploy.parameters]
+stack_name = "hello-world"
+region = "eu-west-1"
+resolve_s3 = true            # creates or selects a bucket for artifacts
+capabilities = "CAPABILITY_IAM"
+```
 
+3. The account and region come from the AWS CLI that SAM uses under the hood: via `--profile`/`--region` or the variables `AWS_PROFILE`, `AWS_ACCESS_KEY_ID/SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`.
+4. Deployment is performed by CloudFormation in the selected account/region, with the specified stack name.
 
-## Plugins
+Well, that's cool, but it still doesn't solve our main problem. Every time we want to test something, we have to deploy it on a real AWS instance. **LocalStack** solves this problem.
 
-The killer feature of `markdown-it` is very effective support of
-[syntax plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).
+## LocalStack : AWS on your machine
 
+LocalStack is a cloud service emulator that runs locally in a container or in your continuous integration environment.
 
-### [Emojies](https://github.com/markdown-it/markdown-it-emoji)
+- **Free**: No skyrocketing AWS bills (though premium features exist, which we'll discuss later)
+- **Fast**: Deploy in 2 seconds instead of 2 minutes
+- **Safe**: You don't break anything in the real AWS environment
 
-> Classic markup: :wink: :cry: :laughing: :yum:
->
-> Shortcuts (emoticons): :-) :-( 8-) ;)
+For us, it transforms how we develop. We can test the Lambda invocation directly, rather than just the code contained in the Lambda (there's a subtle difference!).
 
-see [how to change output](https://github.com/markdown-it/markdown-it-emoji#change-output) with twemoji.
+### Installation with Docker
 
+A simple `docker-compose.yml` is sufficient.
 
-### [Subscript](https://github.com/markdown-it/markdown-it-sub) / [Superscript](https://github.com/markdown-it/markdown-it-sup)
+```yaml
+version: '3.8'
 
-- 19^th^
-- H~2~O
+services:
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566" # Main LocalStack endpoint
+    environment:
+      - SERVICES=lambda,apigateway,s3,cloudformation,logs
+      - DEBUG=1
+      - LAMBDA_EXECUTOR=docker
+      - AWS_DEFAULT_REGION=eu-west-1
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+```
 
+#### Getting Started
 
-### [\<ins>](https://github.com/markdown-it/markdown-it-ins)
+Start LocalStack with:
 
-++Inserted text++
+```bash
+docker compose up -d
+```
 
+LocalStack now runs on `http://localhost:4566`. To deploy to it instead of AWS, we use the `awslocal` and `samlocal` command-line tools, which are wrappers around the `aws` and `sam` commands that point directly to LocalStack.
 
-### [\<mark>](https://github.com/markdown-it/markdown-it-mark)
+### Install the tools
 
-==Marked text==
+```bash
+pip install aws-sam-cli awscli-local
+```
 
+Then, the development workflow becomes trivial.
 
-### [Footnotes](https://github.com/markdown-it/markdown-it-footnote)
+```bash
+# 1. Code your Lambda in src/handlers/ and add it to template.yaml
 
-Footnote 1 link[^first].
+# 2. Build
+samlocal build
 
-Footnote 2 link[^second].
+# 3. Deploy on LocalStack
+samlocal deploy
 
-Inline footnote^[Text of inline footnote] definition.
+# 4. Test
+awslocal lambda invoke \
+    --function-name hello-world-function \
+    response.json
+    
+cat response.json  # See the result
+```
 
-Duplicated footnote reference[^second].
+Need to make changes? Modify your code, run `samlocal build && samlocal deploy` again, and it will be redeployed in seconds. You can iterate quickly.
 
-[^first]: Footnote **can have markup**
+## Lambda Layers: Sharing code between Lambdas
 
-    and multiple paragraphs.
+After a while, you will have several Lambdas. And these Lambdas may share code—utility functions, response formatting, etc.
 
-[^second]: Footnote text.
+The problem is that Lambdas are independent. If you need to share a function between two Lambdas, you have to copy and paste it into each Lambda.
 
+Actually, that's not quite true—**Lambda Layers solve this problem.** A Layer is a package of reusable code that multiple Lambdas can share.
 
-### [Definition lists](https://github.com/markdown-it/markdown-it-deflist)
+In our case, we're going to create a Layer with our response formatting functions, so that all our Lambdas return the same JSON format.
 
-Term 1
+### Structure of a Layer
 
-:   Definition 1
-with lazy continuation.
+```
+layers/
+└── custom_utils/
+    ├── __init__.py
+    ├── display.py          # Your utility functions
+    └── requirements.txt    # Dependencies (if any)
+```
 
-Term 2 with *inline markup*
+**display.py** :
 
-:   Definition 2
+```python
+import json
 
-        { some code, part of Definition 2 }
+def format_response(status_code, data):
+    return {
+        "statusCode": status_code,
+        "headers": {"Content-Type": "application/json"},
+        "body": json.dumps(data)
+    }
 
-    Third paragraph of definition 2.
+def get_greeting(name):
+    return f"Hello, {name}!"
+```
 
-_Compact style:_
+In `template.yaml`, declare the Layer:
 
-Term 1
-  ~ Definition 1
+```yaml
+Resources:
+  CustomUtilsLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: custom-utils-layer
+      ContentUri: layers/custom_utils/
+      CompatibleRuntimes:
+        - python3.12
 
-Term 2
-  ~ Definition 2a
-  ~ Definition 2b
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/handlers/hello_world/
+      Handler: app.lambda_handler
+      Layers:
+        - !Ref CustomUtilsLayer  # To associate the Layer
+```
 
+In your Lambda, you can import directly:
 
-### [Abbreviations](https://github.com/markdown-it/markdown-it-abbr)
+```python
+from custom_utils import format_response, get_greeting
 
-This is HTML abbreviation example.
+def lambda_handler(event, context):
+    name = event.get("queryStringParameters", {}).get("name", "World")
+    greeting = get_greeting(name)
+    return format_response(200, {"message": greeting})
+```
 
-It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
+Simple, elegant, reusable. Except that... **it doesn't work on LocalStack** 😅
 
-*[HTML]: Hyper Text Markup Language
+## The Problem with Layers on LocalStack
 
-### [Custom containers](https://github.com/markdown-it/markdown-it-container)
+On AWS, when you use a Layer, AWS automatically mounts it in `/opt/python` (if you're developing in Python, of course) and everything works. On LocalStack... not so much. You deploy, you test, and boom:
 
-::: warning
-*here be dragons*
-:::
+```
+ModuleNotFoundError: No module named ‘custom_utils’
+```
+
+LocalStack creates the Layer and associates it with your Lambda, but it doesn't mount it in the execution container. Why? Because it's a premium feature of LocalStack Pro.
+
+**The solution?** A little Docker workaround. Not very elegant, but it works!
+
+### The Workaround: Mount Layers Manually
+
+The idea is simple: tell LocalStack to mount your `layers/` folder directly into the Lambda containers via Docker volumes.
+
+Modify your `docker-compose.yml`:
+
+```yaml
+services:
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=lambda,apigateway,s3,cloudformation,logs
+      - DEBUG=1
+      - LAMBDA_EXECUTOR=docker
+      - LAMBDA_DOCKER_NETWORK=localstack-sam-network
+      
+      # 🔧 THE WORKAROUND: Mount the layers in the Lambda containers.
+      - LAMBDA_DOCKER_FLAGS=-v /var/www/hackday/localstack-test/layers:/opt/python:ro
+      
+      - AWS_DEFAULT_REGION=eu-west-1
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      
+      # 🔧 THE WORKAROUND: Mount the layers in LocalStack
+      - "/var/www/hackday/localstack-test/layers:/opt/python:ro"
+    networks:
+      - localstack-sam-network
+
+networks:
+  localstack-sam-network:
+    driver: bridge
+```
+
+**Important**: Replace `/var/www/hackday/localstack-test/layers` with the **absolute path** to your layers folder.
+
+### How does it work?
+
+1. `LAMBDA_DOCKER_FLAGS` tells LocalStack: “When you create a Lambda container, mount this volume in it.”
+2. The volume mounts your `layers/` folder in `/opt/python` of the Lambda container.
+3. Python can now import from `/opt/python/custom_utils/`.
+
+### Limitations of the workaround
+
+Let's be honest, this workaround has its flaws:
+
+1. **No versioning**: All Lambdas use the same version of the Layer.
+2. **Not identical to AWS**: On AWS, the structure is different. You can always pay for the premium version to get full parity.
+3. **No hot reload**: Even with a mounted volume, LocalStack "freezes" the package at deployment time. So if you modify the Layer code, you have to redeploy the Lambda. The premium version of LocalStack may support hot reload, but we haven't tested it.
+
+## Conclusion
+
+That's how we set up our Lambda dev environment. It's not perfect—the Layers workaround is a hack—but it works and saves us a ton of time.
+
+**The complete setup:**
+
+1. LocalStack to emulate AWS locally
+2. SAM to define the infrastructure
+3. A Docker workaround for Layers
+4. Makefiles for automation
+
+**What's changed in our daily routine:**
+
+- End-to-end feature development done locally
+- Unlimited testing without watching the AWS bill skyrocket
+- Everyone has the same development environment (thanks to docker-compose)
+
+For our use case (SQL backend + Hasura + Python Lambdas for complex processing), this is the ideal setup. We keep Hasura for standard CRUD operations, and we bring out the Lambda artillery when we need Python.
+
+If you're in a similar situation, we strongly encourage you to try LocalStack. Yes, there are a few hacks involved (like the Layers workaround), but the productivity gains are huge.
+
+And special mention to SAM, which makes infrastructure management super simple.
+
+You can find the complete code of our example on [GitHub](https://github.com/arimet/localstack)

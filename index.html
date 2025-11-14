@@ -1,389 +1,334 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anthony Rimet - Développeur FullStack JavaScript</title>
-
-  <!--
-    - favicon
-  -->
-  <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
-
-  <!--
-    - custom css link
-  -->
-  <link rel="stylesheet" href="./assets/css/style.css">
-
-  <!--
-    - google font link
-  -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-</head>
-
-<body>
-
-  <!--
-    - #MAIN
-  -->
-
-  <main>
-
-    <!--
-      - #SIDEBAR
-    -->
-
-    <aside class="sidebar" data-sidebar>
-
-      <div class="sidebar-info">
-
-        <figure class="avatar-box">
-          <img src="./assets/images/anthony.png" alt="Anthony Rimet" width="100">
-        </figure>
-
-        <div class="info-content">
-          <h1 class="name" title="Anthony Rimet">Anthony Rimet</h1>
-
-          <p class="title">Développeur FullStack JavaScript</p>
-        </div>
-
-        <button class="info_more-btn" data-sidebar-btn>
-          <span>Show Contacts</span>
-
-          <ion-icon name="chevron-down"></ion-icon>
-        </button>
-
-      </div>
-
-      <div class="sidebar-info_more">
-
-        <div class="separator"></div>
-
-        <ul class="contacts-list">
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="mail-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Email</p>
-
-              <a href="mailto:anthony.rimet03@gmail.com" class="contact-link">anthony.rimet03@gmail.com</a>
-            </div>
-
-          </li>
-
-        
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="location-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Location</p>
-
-              <address>Nancy (54000), France</address>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="language-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Languages</p>
-
-              <span>Français (courant) | Anglais (avancé)</span>
-            </div>
-
-          </li>
-
-        </ul>
-
-        <div class="separator"></div>
-
-        <ul class="social-list">
-
-          <li class="social-item">
-            <a href="https://www.linkedin.com/in/anthonyrimet" class="social-link" target="_blank">
-              <ion-icon name="logo-linkedin"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="https://github.com/arimet" class="social-link" target="_blank">
-              <ion-icon name="logo-github"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="https://marmelab.com/blog/authors/anthony" class="social-link" target="_blank">
-              <ion-icon name="book-outline"></ion-icon>
-            </a>
-          </li>
-
-        </ul>
-
-      </div>
-
-    </aside>
-
-
-
-
-
-    <!--
-      - #main-content
-    -->
-
-    <div class="main-content">
-
-      <!--
-        - #NAVBAR
-      -->
-
-      <nav class="navbar">
-
-        <ul class="navbar-list">
-
-          <li class="navbar-item">
-            <button class="navbar-link  active" data-nav-link>About</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Blog</button>
-          </li>
-
-        </ul>
-
-      </nav>
-
-
-
-
-
-      <!--
-        - #ABOUT
-      -->
-
-      <article class="about  active" data-page="about">
-
-        <header>
-          <h2 class="h2 article-title">About me</h2>
-        </header>
-
-        <section class="about-text">
-          <p>
-            Passionné par le métier de développeur web depuis plus de 9 ans, j'ai à coeur de me former continuellement. 
-            J'adore me challenger pour arriver à bout des objectifs.
-          </p>
-
-          <p>
-            Les nouvelles technologies et le travail en équipe représentent pour moi une source de motivation continue. 
-            Spécialisé dans le développement FullStack JavaScript, j'interviens sur des projets variés avec des technologies 
-            modernes comme React, Node.js, et PostgreSQL.
-          </p>
-        </section>
-
-        <!--
-          - experience
-        -->
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="briefcase-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Expérience Professionnelle</h3>
-          </div>
-
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Senior Software Engineer - Marmelab</h4>
-
-              <span>Septembre 2021 — Présent</span>
-
-              <p class="timeline-text">
-                Développement d'applications complexes pour des clients variés (Mitsubishi, ARTE GIE, Coutot-Roehrig, Le Nouvel Observateur). 
-                Refonte complète de moteurs de recherche, création d'interfaces React-admin, développement backend Node.js/PostgreSQL, 
-                et mise en place d'architectures AWS avec Lambda Python.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Software Engineer - AtoutBio</h4>
-
-              <span>Avril 2020 — Août 2021</span>
-
-              <p class="timeline-text">
-                Application de suivi graphique des statistiques des laboratoires avec gestion des droits. 
-                Migration continue entre deux SIG (Odancio - Kalisil) via API dédiées. 
-                Technologies: Angular, Express, Node.js
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Front-end Engineer - SmartFizz</h4>
-
-              <span>Avril 2019 — Avril 2020</span>
-
-              <p class="timeline-text">
-                Interface de gestion de carte/menu et borne de commande tactile pour la restauration. 
-                Connecteurs pour périphériques POS (imprimante, caisse, scanner, paiement). 
-                Technologies: Angular, Express, Node.js, Electron, Vue.js
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Software Engineer - Neo-Nomade</h4>
-
-              <span>Avril 2016 — Avril 2019</span>
-
-              <p class="timeline-text">
-                Application mobile reprenant les fonctionnalités du site Neo-Nomade. 
-                Création d'une API PHP et développement de modules front/back. 
-                Technologies: React Native, HTML, JS, CSS, PHP, Solr, Angular.js
-              </p>
-
-            </li>
-
-          </ol>
-
-        </section>
-
-
-      </article>
-
-
-
-
-
-      <!--
-        - #RESUME
-      -->
-
-      <article class="resume" data-page="resume" style="display: none;">
-        <!-- Resume section merged into About tab -->
-      </article>
-
-
-
-
-
-      <!--
-        - #PORTFOLIO
-      -->
-
-      <article class="portfolio" data-page="portfolio" style="display: none;">
-        <!-- Portfolio section removed -->
-      </article>
-
-
-
-
-
-      <!--
-        - #BLOG
-      -->
-
-      <article class="blog" data-page="blog">
-
-        <header>
-          <h2 class="h2 article-title">Blog</h2>
-        </header>
-
-        <section class="blog-posts">
-
-          <ul class="blog-posts-list">
-
-            <li class="blog-post-item">
-              <a href="/article.html?name=test.md" class="blog-post-link">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-1.jpg" alt="Design conferences in 2022" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design conferences in 2022</h3>
-
-                  <p class="blog-text">
-                    Veritatis et quasi architecto beatae vitae dicta sunt, explicabo.
-                  </p>
-
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Anthony Rimet - Senior Software Engineer</title>
+        <link
+            rel="shortcut icon"
+            href="./assets/images/logo.ico"
+            type="image/x-icon"
+        />
+        <link rel="stylesheet" href="./assets/css/style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+
+    <body>
+
+        <main>
+
+            <aside class="sidebar" data-sidebar>
+                <div class="sidebar-info">
+                    <figure class="avatar-box">
+                        <img
+                            src="./assets/images/anthony.png"
+                            alt="Anthony Rimet"
+                            width="100"
+                        />
+                    </figure>
+
+                    <div class="info-content">
+                        <h1 class="name" title="Anthony Rimet">
+                            Anthony Rimet
+                        </h1>
+
+                        <p class="title">Senior Software Engineer</p>
+                    </div>
+
+                    <button class="info_more-btn" data-sidebar-btn>
+                        <span>Show Contacts</span>
+
+                        <ion-icon name="chevron-down"></ion-icon>
+                    </button>
                 </div>
 
-              </a>
-            </li>
+                <div class="sidebar-info_more">
+                    <div class="separator"></div>
 
-          
+                    <ul class="contacts-list">
+                        <li class="contact-item">
+                            <div class="icon-box">
+                                <ion-icon name="mail-outline"></ion-icon>
+                            </div>
 
-          </ul>
+                            <div class="contact-info">
+                                <p class="contact-title">Email</p>
 
-        </section>
+                                <a
+                                    href="mailto:anthony.rimet03@gmail.com"
+                                    class="contact-link"
+                                    >anthony.rimet03@gmail.com</a
+                                >
+                            </div>
+                        </li>
 
-      </article>
+                        <li class="contact-item">
+                            <div class="icon-box">
+                                <ion-icon name="location-outline"></ion-icon>
+                            </div>
 
+                            <div class="contact-info">
+                                <p class="contact-title">Location</p>
 
+                                <address>Nancy (54000), France</address>
+                            </div>
+                        </li>
 
+                        <li class="contact-item">
+                            <div class="icon-box">
+                                <ion-icon name="language-outline"></ion-icon>
+                            </div>
 
+                            <div class="contact-info">
+                                <p class="contact-title">Languages</p>
 
-      <!--
-        - #CONTACT
-      -->
+                                <p class="contact-desc">French (fluent)</p>
+                                <p class="contact-desc">English (advanced)</p>
+                            </div>
+                        </li>
+                    </ul>
 
-      <article class="contact" data-page="contact" style="display: none;">
-        <!-- Contact section removed -->
-      </article>
+                    <div class="separator"></div>
 
-    </div>
+                    <ul class="social-list">
+                        <li class="social-item">
+                            <a
+                                href="https://www.linkedin.com/in/anthonyrimet"
+                                class="social-link"
+                                target="_blank"
+                            >
+                                <ion-icon name="logo-linkedin"></ion-icon>
+                            </a>
+                        </li>
 
-  </main>
+                        <li class="social-item">
+                            <a
+                                href="https://github.com/arimet"
+                                class="social-link"
+                                target="_blank"
+                            >
+                                <ion-icon name="logo-github"></ion-icon>
+                            </a>
+                        </li>
 
+                    </ul>
+                </div>
+            </aside>
 
+            <div class="main-content">
+                <nav class="navbar">
+                    <ul class="navbar-list">
+                        <li class="navbar-item">
+                            <button class="navbar-link active" data-nav-link>
+                                About
+                            </button>
+                        </li>
 
+                        <li class="navbar-item">
+                            <button class="navbar-link" data-nav-link>
+                                Blog
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
 
+                <article class="about active" data-page="about">
+                    <header>
+                        <h2 class="h2 article-title">About me</h2>
+                    </header>
 
+                    <section class="about-text">
+                        <p>
+                            Passionate about web development for over 9 years, I
+                            am committed to continuous learning. I love
+                            challenging myself to achieve my goals.
+                        </p>
 
-  <!--
-    - custom js link
-  -->
-  <script src="./assets/js/script.js"></script>
+                        <p>
+                            New technologies and teamwork are a continuous
+                            source of motivation for me. Specialized in
+                            FullStack JavaScript development, I work on various
+                            projects with modern technologies such as React,
+                            Node.js, and PostgreSQL.
+                        </p>
+                    </section>
 
-  <!--
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+                    <section class="timeline">
+                        <div class="title-wrapper">
+                            <div class="icon-box">
+                                <ion-icon name="briefcase-outline"></ion-icon>
+                            </div>
 
-</body>
+                            <h3 class="h3">Professional Experience</h3>
+                        </div>
 
+                        <ol class="timeline-list">
+                            <li class="timeline-item">
+                                <h4 class="h4 timeline-item-title">
+                                    Senior Software Engineer - Marmelab
+                                </h4>
+
+                                <span>September 2021 — Present</span>
+
+                                <p class="timeline-text">
+                                    Development of complex applications for
+                                    various clients:
+                                </p>
+                                <ul class="timeline-text">
+                                    <li>
+                                        <b>Mitsubishi</b>: Development of an
+                                        internal banking loan management
+                                        application
+                                    </li>
+                                    <li>
+                                        <b>Arte GIE</b>: Maintenance and
+                                        evolution of 4 critical applications for
+                                        the publication of the
+                                        <b>arte.tv</b> website
+                                    </li>
+                                    <li>
+                                        <b>Coutot-Roehrig</b>: Complete overhaul
+                                        of genealogical search tools
+                                    </li>
+                                    <li>
+                                        <b>Le Nouvel Observateur</b>:
+                                        Development of the design system and
+                                        article pages with
+                                        <b>GreenFrame</b> analysis to reduce
+                                        carbon footprint
+                                    </li>
+                                    <li>
+                                        <b>Nanotera</b>: Promotion broadcasting
+                                        applications
+                                    </li>
+                                    <li>
+                                        <b>Sayens</b>: AMOS application for
+                                        measuring cognitive bias through
+                                        psychometric tests
+                                    </li>
+                                    <li>
+                                        <b>Orange Business Services</b>:
+                                        Evolution of the MyPlace application
+                                        (Smart City)
+                                    </li>
+                                    <li>
+                                        <b>LODEX</b>: Open-source content
+                                        management tool enabling CNRS
+                                        documentalists to publish structured
+                                        data collections in the semantic web
+                                    </li>
+                                    <li>
+                                        <b>Hospices Civils de Lyon</b>:
+                                        Implementation of a customized Lodex
+                                        instance
+                                    </li>
+                                    <li>
+                                        <b>Workflowers</b>: Secure multi-tenant
+                                        API for Carbon Pilot
+                                    </li>
+                                    <li>
+                                        <b>Transports publics de Lausanne</b>:
+                                        IV Manager service for passenger
+                                        information terminals
+                                    </li>
+                                    <li>
+                                        <b>Amnesty International</b>: Mobile
+                                        activism application for Human Rights
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="timeline-item">
+                                <h4 class="h4 timeline-item-title">
+                                    Software Engineer - AtoutBio
+                                </h4>
+
+                                <span>April 2020 — August 2021</span>
+
+                                <p class="timeline-text">
+                                    Application for graphical tracking of
+                                    laboratory statistics with rights
+                                    management. Continuous migration between two
+                                    GIS systems (Odancio - Kalisil) via
+                                    dedicated APIs.
+                                </p>
+
+                                <p class="timeline-text">
+                                    <b>Technologies</b>: Angular, Express,
+                                    Node.js
+                                </p>
+                            </li>
+
+                            <li class="timeline-item">
+                                <h4 class="h4 timeline-item-title">
+                                    Front-end Engineer - SmartFizz
+                                </h4>
+
+                                <span>April 2019 — April 2020</span>
+
+                                <p class="timeline-text">
+                                    Menu/card management interface and
+                                    touch-screen ordering kiosk for restaurants.
+                                    Connectors for POS peripherals (printer,
+                                    cash register, scanner, payment).
+                                </p>
+                                <p class="timeline-text">
+                                    <b>Technologies</b>: Angular, Express,
+                                    Node.js, Electron, Vue.js
+                                </p>
+                            </li>
+
+                            <li class="timeline-item">
+                                <h4 class="h4 timeline-item-title">
+                                    Software Engineer - Neo-Nomade
+                                </h4>
+
+                                <span>April 2016 — April 2019</span>
+
+                                <p class="timeline-text">
+                                    Mobile application reproducing the features
+                                    of the Neo-Nomade website. Creation of a PHP
+                                    API and development of front/back modules.
+                                </p>
+                                <p class="timeline-text">
+                                    <b>Technologies</b>: React Native, HTML, JS,
+                                    CSS, PHP, Solr, Angular.js
+                                </p>
+                            </li>
+                        </ol>
+                    </section>
+                </article>
+
+                <article class="blog" data-page="blog">
+                    <header>
+                        <h2 class="h2 article-title">Blog</h2>
+                    </header>
+
+                    <section class="blog-posts">
+                        <ul class="blog-posts-list" id="blog-posts-list">
+                            <!-- Articles will be loaded dynamically from articles.js -->
+                        </ul>
+                    </section>
+                </article>
+            </div>
+        </main>
+
+        <script src="./assets/js/articles.js"></script>
+        <script src="./assets/js/script.js"></script>
+
+        <script
+            type="module"
+            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+        ></script>
+        <script
+            nomodule
+            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+        ></script>
+    </body>
 </html>
