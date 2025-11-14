@@ -23,10 +23,16 @@ const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
 
 // add event to all nav link
-function showPage(pageName) {
+function showPage(pageName, isInitialLoad = false) {
   for (let j = 0; j < pages.length; j++) {
     if (pages[j].dataset.page && pageName === pages[j].dataset.page) {
       pages[j].classList.add("active");
+      // Add no-transition class on initial load to prevent animation
+      if (isInitialLoad) {
+        pages[j].classList.add("no-transition");
+        // Remove it after a short delay so future transitions work
+        setTimeout(() => pages[j].classList.remove("no-transition"), 50);
+      }
     } else {
       pages[j].classList.remove("active");
     }
@@ -57,7 +63,7 @@ if (navigationLinks.length > 0 && pages.length > 0) {
       initialPage = hashPage;
     }
   }
-  showPage(initialPage);
+  showPage(initialPage, true);
 }
 
 

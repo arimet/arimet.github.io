@@ -1,12 +1,4 @@
 const articles = [
-      {
-        title: "TEST",
-        excerpt: "FormAIdable is a browser extension for Chrome and Firefox that extracts information from one tab and automatically populates form fields in another. It makes a great tutorial for building extensions.",
-        date: "April 15, 2025",
-        category: "AI",
-        image: "https://marmelab.com/_astro/cover.CT7y40yV_Z1M7m2T.webp",
-        link: "/article.html?=name=test.md"
-    },
     {
         title: "Building AI-Powered Browser Extensions With WXT",
         excerpt: "FormAIdable is a browser extension for Chrome and Firefox that extracts information from one tab and automatically populates form fields in another. It makes a great tutorial for building extensions.",

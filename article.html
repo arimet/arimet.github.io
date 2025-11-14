@@ -3,11 +3,11 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="dynamic-title">Article Viewer</title>
+        <title id="dynamic-title">Article Viewer</title>
         <link rel="stylesheet" href="assets/css/markdown.css" />
         <link
             rel="shortcut icon"
-            href="./assets/images/logo.ico"
+            href="./assets/images/favicon.ico"
             type="image/x-icon"
         />
         <style>
@@ -29,7 +29,7 @@
             #toc {
                 background: #f7f7f7;
                 border-radius: 8px;
-                box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
                 margin-bottom: 2rem;
                 padding: 2rem;
                 max-width: 800px;
@@ -38,7 +38,6 @@
             }
             #toc ul {
                 padding-left: 1rem;
-
             }
             @media (min-width: 1000px) {
                 .article-layout {
@@ -66,10 +65,18 @@
     </head>
     <body>
         <div style="padding: 0 2rem">
-            <a href="/#blog" style="display: inline-block; color: hsl(15, 85%, 65%); text-decoration: underline;">← Return to Blog</a>
+            <a
+                href="/#blog"
+                style="
+                    display: inline-block;
+                    color: hsl(15, 85%, 65%);
+                    text-decoration: underline;
+                "
+                >← Return to Blog</a
+            >
         </div>
         <div class="article-layout">
-            <div id="toc" class="markdown-body" style="display:none;"></div>
+            <div id="toc" class="markdown-body" style="display: none"></div>
             <div id="article" class="markdown-body">Loading article...</div>
         </div>
         <script>
@@ -98,7 +105,8 @@
                     })
                     .then((md) => {
                         // Parse markdown and render article
-                        document.getElementById('article').innerHTML = marked.parse(md);
+                        document.getElementById('article').innerHTML =
+                            marked.parse(md);
 
                         // Set document title to first heading (h1) in markdown
                         const firstHeadingMatch = md.match(/^#\s+(.+)$/m);
@@ -109,7 +117,11 @@
                         // Generate TOC using marked.lexer for nested headings
                         function createToc(mdText) {
                             // Only include headings with depth > 1 (exclude h1)
-                            const headings = marked.lexer(mdText).filter(x => x.type === 'heading' && x.depth > 1);
+                            const headings = marked
+                                .lexer(mdText)
+                                .filter(
+                                    (x) => x.type === 'heading' && x.depth > 1,
+                                );
                             if (headings.length === 0) return null;
                             const stack = [document.createElement('ul')];
                             for (const heading of headings) {
@@ -122,16 +134,27 @@
                                         stack.push(ul);
                                     }
                                 }
-                                const prefix = marked.getDefaults().headerPrefix || '';
-                                const anchor = prefix + heading.text.replaceAll('.', '').replaceAll(' ', '-');
-                                stack.at(-1).insertAdjacentHTML('beforeend', `<li><a href="#${anchor}">${heading.text}</a></li>`);
+                                const prefix =
+                                    marked.getDefaults().headerPrefix || '';
+                                const anchor =
+                                    prefix +
+                                    heading.text
+                                        .replaceAll('.', '')
+                                        .replaceAll(' ', '-');
+                                stack
+                                    .at(-1)
+                                    .insertAdjacentHTML(
+                                        'beforeend',
+                                        `<li><a href="#${anchor}">${heading.text}</a></li>`,
+                                    );
                             }
                             return stack[0];
                         }
                         const tocDiv = document.getElementById('toc');
                         const tocList = createToc(md);
                         if (tocList && tocList.children.length > 0) {
-                            tocDiv.innerHTML = '<strong>Table of Contents</strong>';
+                            tocDiv.innerHTML =
+                                '<strong>Table of Contents</strong>';
                             tocDiv.appendChild(tocList);
                             tocDiv.style.display = 'block';
                         } else {
@@ -140,12 +163,21 @@
                         }
 
                         // Add id to headings in article for anchor links (match anchor logic)
-                        document.querySelectorAll('#article h1, #article h2, #article h3, #article h4, #article h5, #article h6').forEach(function (h) {
-                            const prefix = marked.getDefaults().headerPrefix || '';
-                            const text = h.textContent;
-                            const anchor = prefix + text.replaceAll('.', '').replaceAll(' ', '-');
-                            h.id = anchor;
-                        });
+                        document
+                            .querySelectorAll(
+                                '#article h1, #article h2, #article h3, #article h4, #article h5, #article h6',
+                            )
+                            .forEach(function (h) {
+                                const prefix =
+                                    marked.getDefaults().headerPrefix || '';
+                                const text = h.textContent;
+                                const anchor =
+                                    prefix +
+                                    text
+                                        .replaceAll('.', '')
+                                        .replaceAll(' ', '-');
+                                h.id = anchor;
+                            });
                     })
                     .catch((err) => {
                         document.getElementById('article').textContent =

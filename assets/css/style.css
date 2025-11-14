@@ -204,7 +204,11 @@ article {
 
 article.active {
     display: block;
-    animation: fade 0.5s ease backwards;
+    /* animation: fade 0.3s ease-in forwards; */
+}
+
+article.active.no-transition {
+    animation: none;
 }
 
 @keyframes fade {
