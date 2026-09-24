@@ -1,346 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Anthony Rimet - Senior Software Engineer</title>
-        <link
-            rel="shortcut icon"
-            href="./assets/images/favicon.ico"
-            type="image/x-icon"
-        />
-        <link rel="preload" href="./assets/css/style.css" as="style" />
-        <link rel="stylesheet" href="./assets/css/style.css" />
-        <link rel="preload" href="./assets/js/articles.js" as="script" />
-        <link rel="preload" href="./assets/js/script.js" as="script" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            rel="preload"
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
-            as="style"
-        />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
-            rel="stylesheet"
-        />
-    </head>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anthony Rimet - Senior Full-Stack JavaScript Engineer</title>
+    <meta name="description" content="Anthony Rimet, senior full-stack JavaScript engineer at Marmelab in Nancy, France: React, Node.js, PostgreSQL and AI apps. Side projects and articles." />
+    <meta name="author" content="Anthony Rimet" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://arimet.github.io/" />
+    <meta name="google-site-verification" content="DAgm0-FGckXqpOHHQ9xXjv3DorjStOArArVVOa161ic" />
+    <meta name="theme-color" content="#f7f9ff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#04124f" media="(prefers-color-scheme: dark)" />
 
-    <body>
+    <!-- Link previews (LinkedIn, Slack, X, Messenger...) -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content="https://arimet.github.io/" />
+    <meta property="og:site_name" content="Anthony Rimet" />
+    <meta property="og:title" content="Anthony Rimet - Senior Full-Stack JavaScript Engineer" />
+    <meta property="og:description" content="Senior full-stack engineer at Marmelab, building complex web apps with React, Node.js and AI for 9+ years." />
+    <meta property="og:image" content="https://arimet.github.io/assets/images/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Anthony Rimet, in front of his name in large white letters on deep blue" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="profile:first_name" content="Anthony" />
+    <meta property="profile:last_name" content="Rimet" />
+    <meta name="twitter:card" content="summary_large_image" />
 
-        <main>
+    <!-- Structured data: lets search engines know this page is about a person -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "ProfilePage",
+            "url": "https://arimet.github.io/",
+            "mainEntity": {
+                "@type": "Person",
+                "name": "Anthony Rimet",
+                "url": "https://arimet.github.io/",
+                "image": "https://arimet.github.io/assets/images/anthony.png",
+                "jobTitle": "Senior Software Engineer",
+                "worksFor": { "@type": "Organization", "name": "Marmelab", "url": "https://marmelab.com" },
+                "address": { "@type": "PostalAddress", "addressLocality": "Nancy", "addressCountry": "FR" },
+                "knowsAbout": ["JavaScript", "TypeScript", "React", "React-Admin", "Node.js", "PostgreSQL", "AI agents", "LLM applications"],
+                "knowsLanguage": ["fr", "en"],
+                "sameAs": [
+                    "https://www.linkedin.com/in/anthonyrimet",
+                    "https://github.com/arimet",
+                    "https://marmelab.com/blog/authors/anthony"
+                ]
+            }
+        }
+    </script>
+    <script>
+        // Before first paint, to avoid a flash of the wrong theme.
+        try {
+            document.documentElement.dataset.theme = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        } catch {
+            document.documentElement.dataset.theme = 'light'
+        }
+    </script>
+    <link rel="icon" href="./assets/images/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="./assets/images/icon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="./assets/images/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="preload" href="./assets/images/anthony.png" as="image" />
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.min.js",
+                "motion": "https://cdn.jsdelivr.net/npm/motion@13.4.3/+esm",
+                "motion/three": "https://cdn.jsdelivr.net/npm/motion@13.4.3/three/+esm"
+            }
+        }
+    </script>
+</head>
 
-            <aside class="sidebar" data-sidebar>
-                <div class="sidebar-info">
-                    <figure class="avatar-box">
-                        <img
-                            src="./assets/images/anthony.png"
-                            alt="Anthony Rimet"
-                            width="100"
-                        />
-                    </figure>
-
-                    <div class="info-content">
-                        <h1 class="name" title="Anthony Rimet">
-                            Anthony Rimet
-                        </h1>
-
-                        <p class="title">Senior Software Engineer</p>
-                    </div>
-
-                    <button class="info_more-btn" data-sidebar-btn>
-                        <span>Show Contacts</span>
-
-                        <ion-icon name="chevron-down"></ion-icon>
-                    </button>
-                </div>
-
-                <div class="sidebar-info_more">
-                    <div class="separator"></div>
-
-                    <ul class="contacts-list">
-                        <li class="contact-item">
-                            <div class="icon-box">
-                                <ion-icon name="mail-outline"></ion-icon>
-                            </div>
-
-                            <div class="contact-info">
-                                <p class="contact-title">Email</p>
-
-                                <a
-                                    href="mailto:anthony.rimet03@gmail.com"
-                                    class="contact-link"
-                                    >anthony.rimet03@gmail.com</a
-                                >
-                            </div>
-                        </li>
-
-                        <li class="contact-item">
-                            <div class="icon-box">
-                                <ion-icon name="location-outline"></ion-icon>
-                            </div>
-
-                            <div class="contact-info">
-                                <p class="contact-title">Location</p>
-
-                                <address>Nancy (54000), France</address>
-                            </div>
-                        </li>
-
-                        <li class="contact-item">
-                            <div class="icon-box">
-                                <ion-icon name="language-outline"></ion-icon>
-                            </div>
-
-                            <div class="contact-info">
-                                <p class="contact-title">Languages</p>
-
-                                <p class="contact-desc">French (fluent)</p>
-                                <p class="contact-desc">English (advanced)</p>
-                            </div>
-                        </li>
-                    </ul>
-
-                    <div class="separator"></div>
-
-                    <ul class="social-list">
-                        <li class="social-item">
-                            <a
-                                href="https://www.linkedin.com/in/anthonyrimet"
-                                class="social-link"
-                                target="_blank"
-                            >
-                                <ion-icon name="logo-linkedin"></ion-icon>
-                            </a>
-                        </li>
-
-                        <li class="social-item">
-                            <a
-                                href="https://github.com/arimet"
-                                class="social-link"
-                                target="_blank"
-                            >
-                                <ion-icon name="logo-github"></ion-icon>
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
-            </aside>
-
-            <div class="main-content">
-                <nav class="navbar">
-                    <ul class="navbar-list">
-                        <li class="navbar-item">
-                            <button class="navbar-link" data-nav-link>
-                                About
-                            </button>
-                        </li>
-
-                        <li class="navbar-item">
-                            <button class="navbar-link" data-nav-link>
-                                Blog
-                            </button>
-                        </li>
-                    </ul>
-                </nav>
-
-                <article class="about" data-page="about">
-                    <header>
-                        <h2 class="h2 article-title">About me</h2>
-                    </header>
-
-                    <section class="about-text">
-                        <p>
-                            Passionate about web development for over 9 years, I
-                            am committed to continuous learning. I love
-                            challenging myself to achieve my goals.
-                        </p>
-
-                        <p>
-                            New technologies and teamwork are a continuous
-                            source of motivation for me. Specialized in
-                            FullStack JavaScript development, I work on various
-                            projects with modern technologies such as React,
-                            Node.js, and PostgreSQL.
-                        </p>
-                    </section>
-
-                    <section class="timeline">
-                        <div class="title-wrapper">
-                            <div class="icon-box">
-                                <ion-icon name="briefcase-outline"></ion-icon>
-                            </div>
-
-                            <h3 class="h3">Professional Experience</h3>
-                        </div>
-
-                        <ol class="timeline-list">
-                            <li class="timeline-item">
-                                <h4 class="h4 timeline-item-title">
-                                    Senior Software Engineer - Marmelab
-                                </h4>
-
-                                <span>September 2021 — Present</span>
-
-                                <p class="timeline-text">
-                                    Development of complex applications for
-                                    various clients:
-                                </p>
-                                <ul class="timeline-text">
-                                    <li>
-                                        <b>Mitsubishi</b>: Development of an
-                                        internal banking loan management
-                                        application
-                                    </li>
-                                    <li>
-                                        <b>Arte GIE</b>: Maintenance and
-                                        evolution of 4 critical applications for
-                                        the publication of the
-                                        <b>arte.tv</b> website
-                                    </li>
-                                    <li>
-                                        <b>Coutot-Roehrig</b>: Complete overhaul
-                                        of genealogical search tools
-                                    </li>
-                                    <li>
-                                        <b>Le Nouvel Observateur</b>:
-                                        Development of the design system and
-                                        article pages with
-                                        <b>GreenFrame</b> analysis to reduce
-                                        carbon footprint
-                                    </li>
-                                    <li>
-                                        <b>Nanotera</b>: Promotion broadcasting
-                                        applications
-                                    </li>
-                                    <li>
-                                        <b>Sayens</b>: AMOS application for
-                                        measuring cognitive bias through
-                                        psychometric tests
-                                    </li>
-                                    <li>
-                                        <b>Orange Business Services</b>:
-                                        Evolution of the MyPlace application
-                                        (Smart City)
-                                    </li>
-                                    <li>
-                                        <b>LODEX</b>: Open-source content
-                                        management tool enabling CNRS
-                                        documentalists to publish structured
-                                        data collections in the semantic web
-                                    </li>
-                                    <li>
-                                        <b>Hospices Civils de Lyon</b>:
-                                        Implementation of a customized Lodex
-                                        instance
-                                    </li>
-                                    <li>
-                                        <b>Workflowers</b>: Secure multi-tenant
-                                        API for Carbon Pilot
-                                    </li>
-                                    <li>
-                                        <b>Transports publics de Lausanne</b>:
-                                        IV Manager service for passenger
-                                        information terminals
-                                    </li>
-                                    <li>
-                                        <b>Amnesty International</b>: Mobile
-                                        activism application for Human Rights
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li class="timeline-item">
-                                <h4 class="h4 timeline-item-title">
-                                    Software Engineer - AtoutBio
-                                </h4>
-
-                                <span>April 2020 — August 2021</span>
-
-                                <p class="timeline-text">
-                                    Application for graphical tracking of
-                                    laboratory statistics with rights
-                                    management. Continuous migration between two
-                                    GIS systems (Odancio - Kalisil) via
-                                    dedicated APIs.
-                                </p>
-
-                                <p class="timeline-text">
-                                    <b>Technologies</b>: Angular, Express,
-                                    Node.js
-                                </p>
-                            </li>
-
-                            <li class="timeline-item">
-                                <h4 class="h4 timeline-item-title">
-                                    Front-end Engineer - SmartFizz
-                                </h4>
-
-                                <span>April 2019 — April 2020</span>
-
-                                <p class="timeline-text">
-                                    Menu/card management interface and
-                                    touch-screen ordering kiosk for restaurants.
-                                    Connectors for POS peripherals (printer,
-                                    cash register, scanner, payment).
-                                </p>
-                                <p class="timeline-text">
-                                    <b>Technologies</b>: Angular, Express,
-                                    Node.js, Electron, Vue.js
-                                </p>
-                            </li>
-
-                            <li class="timeline-item">
-                                <h4 class="h4 timeline-item-title">
-                                    Software Engineer - Neo-Nomade
-                                </h4>
-
-                                <span>April 2016 — April 2019</span>
-
-                                <p class="timeline-text">
-                                    Mobile application reproducing the features
-                                    of the Neo-Nomade website. Creation of a PHP
-                                    API and development of front/back modules.
-                                </p>
-                                <p class="timeline-text">
-                                    <b>Technologies</b>: React Native, HTML, JS,
-                                    CSS, PHP, Solr, Angular.js
-                                </p>
-                            </li>
-                        </ol>
-                    </section>
-                </article>
-
-                <article class="blog" data-page="blog">
-                    <header>
-                        <h2 class="h2 article-title">Blog</h2>
-                    </header>
-
-                    <section class="blog-posts">
-                        <ul class="blog-posts-list" id="blog-posts-list">
-                            <!-- Articles will be loaded dynamically from articles.js -->
-                        </ul>
-                    </section>
-                </article>
+<body>
+    <header class="hero" id="top">
+        <nav class="nav">
+            <a class="logo" href="#top">AR.</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#work">Work</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#writing">Writing</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark theme">
+                    <i class="ph ph-moon" aria-hidden="true"></i>
+                    <i class="ph ph-sun" aria-hidden="true"></i>
+                </button>
+                <a class="nav-cta" href="#contact" data-mail>Say hello <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
             </div>
-        </main>
+        </nav>
 
-        <footer style="opacity: 50%;padding: 10px 20px; color: var(--light-gray-70); font-size: 10px; display: flex; justify-content: end;">
-            Template based on  <a href="https://github.com/codewithsadee/vcard-personal-portfolio" target="_blank" rel="noopener noreferrer" style="color: var(--orange-yellow-crayola); text-decoration: none;">&nbsp; vCard Personal Portfolio</a>
-        </footer>
+        <h1 class="name" aria-label="Anthony Rimet">
+            <span class="word"><span>Anthony</span></span>
+            <span class="word"><span>Rimet</span></span>
+        </h1>
 
-        <script src="./assets/js/articles.js"></script>
-        <script src="./assets/js/script.js"></script>
+        <canvas class="hero-canvas" role="img" aria-label="Portrait of Anthony Rimet, drawn in pencil then painted in">
+            <img src="./assets/images/anthony.png" alt="Portrait of Anthony Rimet" width="851" height="676" />
+        </canvas>
 
-        <script
-            type="module"
-            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-        ></script>
-        <script
-            nomodule
-            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
-        ></script>
-    </body>
+        <div class="hero-intro">
+            <p>Hey there! I'm a senior full-stack engineer at Marmelab, building complex web apps for 9+ years.</p>
+            <a class="hero-cta" href="#contact" data-mail>// Get in touch <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+        </div>
+
+        <ul class="hero-skills" aria-label="What I do">
+            <li>Full-stack JavaScript</li>
+            <li class="is-active">React &amp; React-Admin</li>
+            <li>Node.js &amp; PostgreSQL</li>
+            <li>AI-powered apps</li>
+        </ul>
+
+        <ul class="hero-clients" aria-label="Some clients">
+            <li>Arte</li>
+            <li>Amnesty International</li>
+            <li>Orange Business</li>
+            <li>Le Nouvel Obs</li>
+            <li>Mitsubishi</li>
+            <li>CNRS</li>
+        </ul>
+    </header>
+
+    <main>
+        <section class="about" id="about">
+            <h2 class="section-title reveal">About</h2>
+            <div class="about-text">
+                <p class="lead reveal">Passionate about web development for over 9 years, I am committed to continuous learning. I love challenging myself to achieve my goals.</p>
+                <p class="reveal">New technologies and teamwork are a continuous source of motivation for me. Specialized in full-stack JavaScript, I work on various projects with React, Node.js, and PostgreSQL.</p>
+                <p class="reveal">I also work well with AI, both building LLM-powered features into products and using AI coding agents every day to ship faster.</p>
+                <p class="reveal about-meta">Based in Nancy, France. French (fluent), English (advanced).</p>
+            </div>
+        </section>
+
+        <section class="work" id="work">
+            <h2 class="section-title reveal">Work</h2>
+
+            <ol class="jobs">
+                <li class="job reveal">
+                    <div class="job-head">
+                        <h3>Senior Software Engineer <span>Marmelab</span></h3>
+                        <time>Sept 2021 - Present</time>
+                    </div>
+                    <p>Development of complex applications for various clients:</p>
+                    <ul class="clients">
+                        <li><b>Mitsubishi</b>Internal banking loan management application</li>
+                        <li><b>Arte GIE</b>Maintenance and evolution of 4 critical applications publishing arte.tv</li>
+                        <li><b>Coutot-Roehrig</b>Complete overhaul of genealogical search tools</li>
+                        <li><b>Le Nouvel Observateur</b>Design system and article pages, with GreenFrame analysis to reduce carbon footprint</li>
+                        <li><b>Nanotera</b>Promotion broadcasting applications</li>
+                        <li><b>Sayens</b>AMOS, measuring cognitive bias through psychometric tests</li>
+                        <li><b>Orange Business Services</b>Evolution of the MyPlace smart city application</li>
+                        <li><b>LODEX</b>Open-source tool for CNRS documentalists to publish structured data on the semantic web</li>
+                        <li><b>Hospices Civils de Lyon</b>Customized Lodex instance</li>
+                        <li><b>Workflowers</b>Secure multi-tenant API for Carbon Pilot</li>
+                        <li><b>Transports publics de Lausanne</b>IV Manager for passenger information terminals</li>
+                        <li><b>Amnesty International</b>Mobile activism application for human rights</li>
+                    </ul>
+                </li>
+                <li class="job reveal">
+                    <div class="job-head">
+                        <h3>Software Engineer <span>AtoutBio</span></h3>
+                        <time>Apr 2020 - Aug 2021</time>
+                    </div>
+                    <p>Graphical tracking of laboratory statistics with rights management. Continuous migration between two GIS systems (Odancio, Kalisil) through dedicated APIs.</p>
+                    <p class="stack">Angular, Express, Node.js</p>
+                </li>
+                <li class="job reveal">
+                    <div class="job-head">
+                        <h3>Front-end Engineer <span>SmartFizz</span></h3>
+                        <time>Apr 2019 - Apr 2020</time>
+                    </div>
+                    <p>Menu management interface and touch-screen ordering kiosk for restaurants. Connectors for POS peripherals: printer, cash register, scanner, payment.</p>
+                    <p class="stack">Angular, Express, Node.js, Electron, Vue.js</p>
+                </li>
+                <li class="job reveal">
+                    <div class="job-head">
+                        <h3>Software Engineer <span>Neo-Nomade</span></h3>
+                        <time>Apr 2016 - Apr 2019</time>
+                    </div>
+                    <p>Mobile application mirroring the Neo-Nomade website. PHP API and front/back modules.</p>
+                    <p class="stack">React Native, PHP, Solr, Angular.js</p>
+                </li>
+            </ol>
+        </section>
+
+        <section class="projects" id="projects">
+            <h2 class="section-title reveal">Side projects</h2>
+            <ul class="project-grid">
+                <li class="project reveal">
+                    <div class="project-media"><img src="./assets/images/projects/il-y-a-100-ans.jpg" alt="" loading="lazy" /></div>
+                    <div class="project-body">
+                        <h3><a class="project-link" href="https://arimet.github.io/il-y-a-100-ans/" target="_blank" rel="noopener noreferrer">Il y a 100 ans</a></h3>
+                        <p>The front pages of six French dailies printed exactly 100 years ago today, straight from the BnF archives.</p>
+                        <div class="project-foot">
+                            <span>Vanilla JS, Gallica IIIF</span>
+                            <a class="project-repo" href="https://github.com/arimet/il-y-a-100-ans" target="_blank" rel="noopener noreferrer" aria-label="Il y a 100 ans on GitHub"><i class="ph ph-github-logo" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </li>
+                <li class="project reveal">
+                    <div class="project-media"><img src="./assets/images/projects/handoff.jpg" alt="" loading="lazy" /></div>
+                    <div class="project-body">
+                        <h3><a class="project-link" href="https://github.com/arimet/handoff" target="_blank" rel="noopener noreferrer">handoff</a></h3>
+                        <p>A Claude Code skill that quizzes you on the code Claude wrote, so you never merge what you can't explain.</p>
+                        <div class="project-foot">
+                            <span>Claude Code skill, 27 stars</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="project reveal">
+                    <div class="project-media"><img src="./assets/images/projects/alentours.jpg" alt="" loading="lazy" /></div>
+                    <div class="project-body">
+                        <h3><a class="project-link" href="https://arimet.github.io/alentours/" target="_blank" rel="noopener noreferrer">Alentours</a></h3>
+                        <p>What public data says about any address in France, with the source of every figure.</p>
+                        <div class="project-foot">
+                            <span>TypeScript, open data</span>
+                            <a class="project-repo" href="https://github.com/arimet/alentours" target="_blank" rel="noopener noreferrer" aria-label="Alentours on GitHub"><i class="ph ph-github-logo" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </li>
+                <li class="project reveal">
+                    <div class="project-media"><img src="./assets/images/projects/swish.jpg" alt="" loading="lazy" /></div>
+                    <div class="project-body">
+                        <h3><a class="project-link" href="https://swish-kappa-three.vercel.app" target="_blank" rel="noopener noreferrer">Swish</a></h3>
+                        <p>An offline-first scorer's table for basketball: live score, clock, fouls, stats and PDF match sheets.</p>
+                        <div class="project-foot">
+                            <span>React PWA</span>
+                            <a class="project-repo" href="https://github.com/arimet/swish" target="_blank" rel="noopener noreferrer" aria-label="Swish on GitHub"><i class="ph ph-github-logo" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </li>
+                <li class="project reveal">
+                    <div class="project-media"><img src="./assets/images/projects/la-sauce.jpg" alt="" loading="lazy" /></div>
+                    <div class="project-body">
+                        <h3><a class="project-link" href="https://arimet.github.io/la-sauce-presidentielle/" target="_blank" rel="noopener noreferrer">La Sauce présidentielle</a></h3>
+                        <p>Before voting, the facts: sourced records, controversies and programs of the 2027 French presidential candidates.</p>
+                        <div class="project-foot">
+                            <span>Astro</span>
+                            <a class="project-repo" href="https://github.com/arimet/la-sauce-presidentielle" target="_blank" rel="noopener noreferrer" aria-label="La Sauce présidentielle on GitHub"><i class="ph ph-github-logo" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </li>
+                <li class="project reveal">
+                    <div class="project-media"><img src="./assets/images/projects/sarko.jpg" alt="" loading="lazy" /></div>
+                    <div class="project-body">
+                        <h3><a class="project-link" href="https://calcule-comme-sarko.vercel.app" target="_blank" rel="noopener noreferrer">Le Calculateur Sarko</a></h3>
+                        <p>A satirical calculator that converts any duration with the "Sarko ratio": 5 years equals 3 weeks.</p>
+                        <div class="project-foot">
+                            <span>Satire, TypeScript</span>
+                            <a class="project-repo" href="https://github.com/arimet/calcule-comme-sarko" target="_blank" rel="noopener noreferrer" aria-label="Le Calculateur Sarko on GitHub"><i class="ph ph-github-logo" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </li>
+                <li class="project reveal">
+                    <div class="project-media"><img src="./assets/images/projects/alfred.jpg" alt="" loading="lazy" /></div>
+                    <div class="project-body">
+                        <h3><a class="project-link" href="https://github.com/arimet/Alfred" target="_blank" rel="noopener noreferrer">Alfred</a></h3>
+                        <p>A self-hosted AI agent I reach from my phone, with no port open to the internet and only free models.</p>
+                        <div class="project-foot">
+                            <span>Hermes Agent, MCP, Python</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section class="writing" id="writing">
+            <h2 class="section-title reveal">Writing</h2>
+            <ul class="posts" id="posts"></ul>
+            <button class="more" id="more-posts" type="button" hidden>Show all articles</button>
+        </section>
+    </main>
+
+    <footer class="contact" id="contact">
+        <p class="contact-kicker reveal">Got a project in mind?</p>
+        <a class="contact-mail reveal" href="#contact" data-mail data-mail-text>Email me</a>
+        <div class="contact-links">
+            <a href="https://www.linkedin.com/in/anthonyrimet" target="_blank" rel="noopener noreferrer"><i class="ph ph-linkedin-logo" aria-hidden="true"></i> LinkedIn</a>
+            <a href="https://github.com/arimet" target="_blank" rel="noopener noreferrer"><i class="ph ph-github-logo" aria-hidden="true"></i> GitHub</a>
+        </div>
+    </footer>
+
+    <script src="./assets/js/articles.js"></script>
+    <script type="module" src="./assets/js/site.js"></script>
+    <script type="module" src="./assets/js/hero.js"></script>
+    <script type="module" src="./assets/js/projects.js"></script>
+</body>
 </html>
