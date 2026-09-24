@@ -291,7 +291,9 @@ section { padding: clamp(72px, 12vw, 160px) 0 0; }
     .project-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 767px) {
-    .hero { grid-template-columns: 1fr; grid-template-rows: auto auto auto auto 1fr; min-height: 100dvh; }
+    /* The last row holds the portrait (see layout() in hero.js): on short screens, grow the hero
+       past the viewport rather than squeeze the portrait over the copy. */
+    .hero { grid-template-columns: 1fr; grid-template-rows: auto auto auto auto minmax(300px, 1fr); min-height: 100dvh; }
     .nav { grid-template-columns: 1fr auto; }
     .nav-links { display: none; }
     .name { flex-direction: column; align-items: flex-start; font-size: 25vw; line-height: 0.84; margin-top: 8px; }
