@@ -34,6 +34,12 @@
 *,
 *::before,
 *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Starting state of the intro animations (site.js), applied from the first paint. */
+@media (prefers-reduced-motion: no-preference) {
+    .js .name .word > span { transform: translateY(105%); }
+    .js :is(.nav, .hero-intro, .hero-skills, .hero-clients, .reveal) { opacity: 0; }
+}
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {

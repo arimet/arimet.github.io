@@ -58,6 +58,10 @@
         } catch {
             document.documentElement.dataset.theme = 'light'
         }
+        // Intro text starts hidden (see .js in style.css) so it never flashes before its animation.
+        // Safety net: show it anyway if site.js has not started within 4s.
+        document.documentElement.classList.add('js')
+        window.introFallback = setTimeout(() => document.documentElement.classList.remove('js'), 4000)
     </script>
     <link rel="icon" href="./assets/images/favicon.ico" sizes="48x48" />
     <link rel="icon" href="./assets/images/icon-192.png" type="image/png" sizes="192x192" />

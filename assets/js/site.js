@@ -70,13 +70,20 @@ if (!reduce) {
     }, 2400)
 }
 
-if (!reduce) {
+// A background tab never runs the intro (no animation frames): just show the text.
+if (reduce || document.hidden) {
+    clearTimeout(window.introFallback)
+    document.documentElement.classList.remove('js')
+} else {
+    clearTimeout(window.introFallback)
+    // Wait for Anton/Outfit so the name does not jump from the fallback font mid-animation.
+    await Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 1500))])
+
     // Hero: the name rises out of its line box, then the copy follows.
     animate('.name .word > span', { y: ['105%', '0%'] }, { delay: stagger(0.08, { startDelay: 0.1 }), duration: 1.1, ease })
     animate('.nav, .hero-intro, .hero-skills, .hero-clients', { opacity: [0, 1], y: [14, 0] }, { delay: stagger(0.1, { startDelay: 0.5 }), duration: 0.9, ease })
 
     // Sections: fade up once when they enter the viewport.
-    document.querySelectorAll('.reveal').forEach((el) => (el.style.opacity = 0))
     inView('.reveal', (el) => {
         animate(el, { opacity: [0, 1], y: [24, 0] }, { duration: 0.8, ease })
     }, { amount: 0.2 })
