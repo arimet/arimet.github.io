@@ -6,3 +6,4 @@ Sitemap: https://arimet.github.io/sitemap.xml
 Sitemap: https://arimet.github.io/alentours/sitemap.xml
 Sitemap: https://arimet.github.io/la-sauce-presidentielle/sitemap.xml
 Sitemap: https://arimet.github.io/il-y-a-100-ans/sitemap.xml
+Sitemap: https://arimet.github.io/meuh-rocket/sitemap.xml
