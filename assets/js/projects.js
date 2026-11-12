@@ -8,7 +8,7 @@ import { vertexShader, fragmentShader, token, load } from './sketch.js'
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
 const lineCol = { value: new THREE.Color() }
 const paperCol = { value: new THREE.Color() }
-const tiles = []
+const tiles = new Set()
 
 async function mount(media) {
     const img = await load(media.querySelector('img').src)
@@ -68,18 +68,25 @@ async function mount(media) {
     }
     new ResizeObserver(layout).observe(media)
     new IntersectionObserver(([e]) => (tile.visible = e.isIntersecting)).observe(media)
-    tiles.push(tile)
+    // Chrome keeps ~16 WebGL contexts and drops the oldest past that: fall back to the plain screenshot.
+    canvas.addEventListener('webglcontextlost', () => {
+        tiles.delete(tile)
+        media.classList.remove('is-drawn')
+        canvas.remove()
+    })
+    tiles.add(tile)
     media.classList.add('is-drawn')
     return tile
 }
 
+// Once painted, the tile looks like its screenshot: hand back the WebGL context.
 function paint(tile, to) {
-    if (reduce) return
     tile.mesh.material.uniforms.origin.value.set(0.15, 0.85)
     tile.busy++
     animate(tile.mesh, { reveal: to }, { duration: 1.4, ease: [0.45, 0, 0.2, 1] }).then(() => {
-        tile.busy--
-        tile.dirty = true
+        tiles.delete(tile)
+        tile.renderer.dispose()
+        tile.renderer.forceContextLoss()
     })
 }
 
@@ -93,14 +100,19 @@ function applyTheme() {
 applyTheme()
 new MutationObserver(applyTheme).observe(document.documentElement, { attributeFilter: ['data-theme'] })
 
-for (const media of document.querySelectorAll('.project-media')) {
-    mount(media).then((tile) => {
-        new IntersectionObserver(([e], io) => {
-            if (!e.isIntersecting) return
-            paint(tile, 1)
-            io.disconnect()
-        }, { threshold: 0.5 }).observe(media)
-    })
+// A context per tile only while it comes into view and paints; with reduced motion the screenshot is enough.
+for (const media of reduce ? [] : document.querySelectorAll('.project-media')) {
+    new IntersectionObserver(([near], io) => {
+        if (!near.isIntersecting) return
+        io.disconnect()
+        mount(media).then((tile) => {
+            new IntersectionObserver(([e], io) => {
+                if (!e.isIntersecting) return
+                paint(tile, 1)
+                io.disconnect()
+            }, { threshold: 0.5 }).observe(media)
+        })
+    }, { rootMargin: '400px 0px' }).observe(media)
 }
 
 frame.render(() => {

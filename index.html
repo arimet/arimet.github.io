@@ -90,6 +90,7 @@
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#work">Work</a></li>
+                <li><a href="#plaid">Plaid</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#writing">Writing</a></li>
             </ul>
@@ -196,9 +197,56 @@
             </ol>
         </section>
 
+        <section class="featured" id="plaid">
+            <p class="featured-kicker reveal">Featured project · open source</p>
+            <h2 class="section-title reveal">Plaid</h2>
+            <div class="featured-grid">
+                <a class="featured-media project-media reveal" href="https://arimet.github.io/plaid/" target="_blank" rel="noopener noreferrer" aria-label="Plaid website">
+                    <img src="./assets/images/projects/plaid.jpg" alt="" loading="lazy" />
+                </a>
+                <div class="featured-body">
+                    <p class="lead reveal">A home streaming service in one sitting. Answer four questions in your browser or your terminal: Plaid installs seven open-source apps, links them together and hands you the address of each one.</p>
+                    <ul class="featured-points reveal">
+                        <li><b>Seven apps, wired up</b>Jellyfin, Seerr, Radarr, Sonarr, qBittorrent, Prowlarr and Bazarr talk to each other through their APIs from the first minute.</li>
+                        <li><b>Removed without a trace</b>One click takes everything back out: containers, volumes, settings.</li>
+                        <li><b>Looks after itself</b>Disk and VPN guards, one-click updates, language and quality profiles, backups when you ask.</li>
+                        <li><b>Runs anywhere</b>Linux, Synology, Raspberry Pi, Mac and Windows, with optional VPN and Tailscale.</li>
+                    </ul>
+                    <div class="featured-actions reveal">
+                        <a class="featured-cta" href="https://arimet.github.io/plaid/" target="_blank" rel="noopener noreferrer">Visit the site <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+                        <a class="featured-link" href="https://github.com/arimet/plaid" target="_blank" rel="noopener noreferrer"><i class="ph ph-github-logo" aria-hidden="true"></i> Source</a>
+                        <a class="featured-link" href="https://github.com/arimet/plaid/releases/latest" target="_blank" rel="noopener noreferrer"><i class="ph ph-download-simple" aria-hidden="true"></i> Latest release</a>
+                    </div>
+                    <p class="featured-stack reveal">Python (stdlib only), Docker Compose, vanilla JS</p>
+                </div>
+            </div>
+        </section>
+
         <section class="projects" id="projects">
             <h2 class="section-title reveal">Side projects</h2>
             <ul class="project-grid">
+                <li class="project reveal">
+                    <div class="project-media"><img src="./assets/images/projects/breath.jpg" alt="" loading="lazy" /></div>
+                    <div class="project-body">
+                        <h3><a class="project-link" href="https://arimet.github.io/breath/" target="_blank" rel="noopener noreferrer">Breath</a></h3>
+                        <p>Guided breathing, short meditations and a sleep wind-down, painted as a watercolor landscape drawn in code. Soft sounds instead of a voice, works offline, in English and French.</p>
+                        <div class="project-foot">
+                            <span>TypeScript, SVG, Web Audio, PWA</span>
+                            <a class="project-repo" href="https://github.com/arimet/breath" target="_blank" rel="noopener noreferrer" aria-label="Breath on GitHub"><i class="ph ph-github-logo" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </li>
+                <li class="project reveal">
+                    <div class="project-media"><img src="./assets/images/projects/bookflix.jpg" alt="" loading="lazy" /></div>
+                    <div class="project-body">
+                        <h3><a class="project-link" href="https://arimet.github.io/bookflix/" target="_blank" rel="noopener noreferrer">Bookflix</a></h3>
+                        <p>Read your ebooks and manga straight from your Dropbox, Netflix style: profiles, rows, series as seasons, and progress synced across devices. The app can never write to your books.</p>
+                        <div class="project-foot">
+                            <span>React, Chakra UI, prose-reader, PWA</span>
+                            <a class="project-repo" href="https://github.com/arimet/bookflix" target="_blank" rel="noopener noreferrer" aria-label="Bookflix on GitHub"><i class="ph ph-github-logo" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </li>
                 <li class="project reveal">
                     <div class="project-media"><img src="./assets/images/projects/transhumance.jpg" alt="" loading="lazy" /></div>
                     <div class="project-body">
@@ -229,6 +277,28 @@
                         <div class="project-foot">
                             <span>TypeScript, Three.js, Web Audio</span>
                             <a class="project-repo" href="https://github.com/arimet/dig-pig" target="_blank" rel="noopener noreferrer" aria-label="Dig Pig on GitHub"><i class="ph ph-github-logo" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </li>
+                <li class="project reveal">
+                    <div class="project-media"><img src="./assets/images/projects/ciel-ouvert.jpg" alt="" loading="lazy" /></div>
+                    <div class="project-body">
+                        <h3><a class="project-link" href="https://arimet.github.io/ciel-ouvert/" target="_blank" rel="noopener noreferrer">Ciel ouvert</a></h3>
+                        <p>The real sky above any French town: a photo of the place under volumetric clouds matched to the forecast, and lessons that replay a weather phenomenon step by step.</p>
+                        <div class="project-foot">
+                            <span>Three.js, Open-Meteo, Depth Anything</span>
+                            <a class="project-repo" href="https://github.com/arimet/ciel-ouvert" target="_blank" rel="noopener noreferrer" aria-label="Ciel ouvert on GitHub"><i class="ph ph-github-logo" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </li>
+                <li class="project reveal">
+                    <div class="project-media"><img src="./assets/images/projects/au-tableau.jpg" alt="" loading="lazy" /></div>
+                    <div class="project-body">
+                        <h3><a class="project-link" href="https://arimet.github.io/au-tableau/" target="_blank" rel="noopener noreferrer">Au tableau !</a></h3>
+                        <p>One science question a week, answered on a chalkboard: diagrams that draw themselves, sliders to play with the numbers, and every calculation sourced and unfoldable. French and English.</p>
+                        <div class="project-foot">
+                            <span>Astro, SVG</span>
+                            <a class="project-repo" href="https://github.com/arimet/au-tableau" target="_blank" rel="noopener noreferrer" aria-label="Au tableau ! on GitHub"><i class="ph ph-github-logo" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </li>
